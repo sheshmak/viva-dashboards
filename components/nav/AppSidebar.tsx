@@ -3,13 +3,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { ThemeToggle } from "@/components/theme/ThemeProvider";
 
 export function AppSidebar() {
   const pathname  = usePathname();
   const { data: session } = useSession();
   const isAdmin   = session?.user?.role === "ADMIN";
-  const [wrikeOpen, setWrikeOpen] = useState(true);
 
   function navClass(href: string) {
     const active = href === "/dashboard"
@@ -31,47 +30,21 @@ export function AppSidebar() {
       </div>
 
       <nav className="sidebar-nav">
-        {/* ── Wrike collapsible section ── */}
+        {/* ── Wrike Dashboards ── */}
         <div className="nav-section">
-          <button
-            className={`nav-group-btn${isWrikeActive ? " nav-group-btn--active" : ""}`}
-            onClick={() => setWrikeOpen(o => !o)}
-            aria-expanded={wrikeOpen}
-          >
-            <span className="flex items-center gap-2">
-              <span className="app-dot app-dot--wrike" />
-              <span>Wrike</span>
-            </span>
-            <svg
-              width="12" height="12" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-              style={{ transform: wrikeOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}
-            >
-              <polyline points="6 9 12 15 18 9" />
+          <div className="nav-section-label">
+            <span className="app-dot app-dot--wrike" />
+            Wrike
+          </div>
+          <Link href="/dashboard/list" className={`nav-item${isWrikeActive ? " nav-item--active" : ""}`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
             </svg>
-          </button>
-
-          {wrikeOpen && (
-            <div className="nav-sub">
-              <Link href="/dashboard" className={navClass("/dashboard")}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="7" height="7" rx="1" />
-                  <rect x="14" y="3" width="7" height="7" rx="1" />
-                  <rect x="3" y="14" width="7" height="7" rx="1" />
-                  <rect x="14" y="14" width="7" height="7" rx="1" />
-                </svg>
-                Consolidated Dashboard
-              </Link>
-              <Link href="/dashboard/schedule" className={navClass("/dashboard/schedule")}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <rect x="3" y="10" width="9" height="3" rx="1.5" />
-                  <rect x="6" y="15" width="15" height="3" rx="1.5" />
-                </svg>
-                Project Schedule
-              </Link>
-            </div>
-          )}
+            Wrike Dashboards
+          </Link>
         </div>
 
         <div className="nav-section nav-section--team">
@@ -111,6 +84,7 @@ export function AppSidebar() {
             <span className="sidebar-user-role">{session?.user?.role ?? "VIEWER"}</span>
           </div>
         </div>
+        <ThemeToggle />
         <button
           className="sidebar-signout"
           onClick={() => signOut({ callbackUrl: "/login" })}
@@ -129,8 +103,8 @@ export function AppSidebar() {
           width: 220px;
           min-width: 220px;
           height: 100vh;
-          background: #141824;
-          border-right: 1px solid #1e2538;
+          background: var(--ground-2);
+          border-right: 1px solid var(--border);
           display: flex;
           flex-direction: column;
           position: fixed;
@@ -143,22 +117,22 @@ export function AppSidebar() {
           align-items: center;
           gap: 8px;
           padding: 20px 18px 16px;
-          border-bottom: 1px solid #1e2538;
+          border-bottom: 1px solid var(--border);
         }
         .sidebar-logo-icon { font-size: 22px; line-height: 1; }
-        .sidebar-logo-text { font-size: 15px; font-weight: 500; color: #e2e8f0; }
-        .sidebar-logo-text strong { color: #FFB020; font-weight: 700; }
+        .sidebar-logo-text { font-size: 15px; font-weight: 500; color: var(--text); }
+        .sidebar-logo-text strong { color: var(--accent); font-weight: 700; }
         .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 0; }
         .nav-section { padding: 0 10px 16px; }
-        .nav-section--team  { border-top: 1px solid #1e2538; padding-top: 16px; }
-        .nav-section--admin { border-top: 1px solid #1e2538; padding-top: 16px; }
+        .nav-section--team  { border-top: 1px solid var(--border); padding-top: 16px; }
+        .nav-section--admin { border-top: 1px solid var(--border); padding-top: 16px; }
         .nav-section-label {
           display: flex;
           align-items: center;
           gap: 6px;
           font-size: 10px;
           font-weight: 700;
-          color: #4a5568;
+          color: var(--text-3);
           letter-spacing: 0.08em;
           text-transform: uppercase;
           padding: 4px 8px 8px;
@@ -175,14 +149,14 @@ export function AppSidebar() {
           cursor: pointer;
           font-size: 11px;
           font-weight: 700;
-          color: #4a5568;
+          color: var(--text-3);
           letter-spacing: 0.07em;
           text-transform: uppercase;
           transition: background 0.12s, color 0.12s;
           margin-bottom: 2px;
         }
-        .nav-group-btn:hover { background: #1e2538; color: #8B9BC0; }
-        .nav-group-btn--active { color: #7CB9FF; }
+        .nav-group-btn:hover { background: var(--ground-3); color: var(--text-2); }
+        .nav-group-btn--active { color: var(--link); }
         .nav-sub { padding-left: 8px; display: flex; flex-direction: column; gap: 1px; }
         .app-dot {
           width: 6px;
@@ -190,7 +164,7 @@ export function AppSidebar() {
           border-radius: 50%;
           flex-shrink: 0;
         }
-        .app-dot--wrike { background: #4f6bed; }
+        .app-dot--wrike { background: var(--primary); }
         .nav-item {
           display: flex;
           align-items: center;
@@ -198,16 +172,16 @@ export function AppSidebar() {
           padding: 8px 10px;
           border-radius: 7px;
           font-size: 13.5px;
-          color: #6b7a99;
+          color: var(--text-2);
           text-decoration: none;
           transition: background 0.12s, color 0.12s;
           font-weight: 500;
         }
-        .nav-item:hover { background: #1e2538; color: #c8d3e8; }
-        .nav-item--active { background: rgba(79,107,237,0.15); color: #7CB9FF; }
-        .nav-item--active svg { color: #7CB9FF; }
+        .nav-item:hover { background: var(--ground-3); color: var(--text-soft); }
+        .nav-item--active { background: rgba(79,107,237,0.15); color: var(--link); }
+        .nav-item--active svg { color: var(--link); }
         .sidebar-footer {
-          border-top: 1px solid #1e2538;
+          border-top: 1px solid var(--border);
           padding: 14px 14px;
           display: flex;
           align-items: center;
@@ -218,7 +192,7 @@ export function AppSidebar() {
           width: 30px;
           height: 30px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #4f6bed, #7CB9FF);
+          background: linear-gradient(135deg, var(--primary), var(--link));
           display: flex;
           align-items: center;
           justify-content: center;
@@ -228,12 +202,12 @@ export function AppSidebar() {
           flex-shrink: 0;
         }
         .sidebar-user-info { display: flex; flex-direction: column; min-width: 0; }
-        .sidebar-user-name { font-size: 12.5px; color: #c8d3e8; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .sidebar-user-role { font-size: 10px; color: #4a5568; text-transform: uppercase; letter-spacing: 0.06em; }
+        .sidebar-user-name { font-size: 12.5px; color: var(--text-soft); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-role { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
         .sidebar-signout {
           background: none;
           border: none;
-          color: #4a5568;
+          color: var(--text-3);
           cursor: pointer;
           padding: 4px;
           border-radius: 6px;
@@ -242,7 +216,7 @@ export function AppSidebar() {
           transition: color 0.12s;
           flex-shrink: 0;
         }
-        .sidebar-signout:hover { color: #ff6b6b; }
+        .sidebar-signout:hover { color: var(--red); }
       `}</style>
     </aside>
   );

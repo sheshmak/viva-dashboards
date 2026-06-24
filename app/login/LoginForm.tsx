@@ -13,7 +13,7 @@ export default function LoginForm() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await signIn("credentials", { email, password, callbackUrl: "/dashboard" });
+    await signIn("credentials", { email, password, callbackUrl: "/dashboard/list" });
     setLoading(false);
   }
 

@@ -31,15 +31,15 @@ function TaskDetailRow({ task }: { task: WrikeTask }) {
   const dueColor = {
     overdue: "text-[var(--red)]",
     today: "text-[var(--accent)]",
-    upcoming: "text-[#8B9BC0]",
-    none: "text-[#5A6A94]",
+    upcoming: "text-[color:var(--text-2)]",
+    none: "text-[color:var(--text-3)]",
   }[urgency];
 
   const dotColor = {
     overdue: "bg-[var(--red)] shadow-[0_0_5px_var(--red)]",
     today: "bg-[var(--accent)]",
-    upcoming: "bg-[#5A6A94]",
-    none: "bg-[#5A6A94]",
+    upcoming: "bg-[var(--text-3)]",
+    none: "bg-[var(--text-3)]",
   }[urgency];
 
   return (
@@ -51,14 +51,14 @@ function TaskDetailRow({ task }: { task: WrikeTask }) {
       <span
         className={cn(
           "flex-1 text-[13.5px] font-medium truncate min-w-0",
-          task.status === "Completed" && "line-through text-[#8B9BC0]"
+          task.status === "Completed" && "line-through text-[color:var(--text-2)]"
         )}
       >
         {task.title}
       </span>
 
       {task.briefDescription && (
-        <span className="hidden group-hover:block text-[12px] text-[#5A6A94] max-w-[200px] truncate">
+        <span className="hidden group-hover:block text-[12px] text-[color:var(--text-3)] max-w-[200px] truncate">
           {task.briefDescription}
         </span>
       )}
@@ -135,8 +135,8 @@ export default function TasksPage() {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-[12px] font-medium transition-all",
                   filter === f
-                    ? "bg-ground-3 text-[#EEF0FF] border border-[var(--border-2)]"
-                    : "text-[#8B9BC0] hover:text-[#EEF0FF] border border-transparent"
+                    ? "bg-ground-3 text-[color:var(--text)] border border-[var(--border-2)]"
+                    : "text-[color:var(--text-2)] hover:text-[color:var(--text)] border border-transparent"
                 )}
               >
                 {f}
@@ -147,7 +147,7 @@ export default function TasksPage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2 text-[12px] text-[#5A6A94]">
+          <div className="flex items-center gap-2 text-[12px] text-[color:var(--text-3)]">
             <span>Sort:</span>
             {(["due", "importance", "title"] as SortType[]).map((s) => (
               <button
@@ -156,8 +156,8 @@ export default function TasksPage() {
                 className={cn(
                   "px-2.5 py-1 rounded-md capitalize transition-all",
                   sort === s
-                    ? "text-[#FFB020] bg-[var(--accent-dim)]"
-                    : "hover:text-[#EEF0FF]"
+                    ? "text-[color:var(--accent)] bg-[var(--accent-dim)]"
+                    : "hover:text-[color:var(--text)]"
                 )}
               >
                 {s === "due" ? "Due date" : s}
@@ -172,9 +172,9 @@ export default function TasksPage() {
           <div className="flex items-center gap-4 px-5 py-2.5 border-b border-[var(--border-2)] bg-ground-3">
             <span className="w-2 flex-shrink-0" />
             <span className="w-1.5 flex-shrink-0" />
-            <span className="flex-1 text-[11px] font-semibold uppercase tracking-wide text-[#5A6A94]">Task</span>
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-[#5A6A94]">Status</span>
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-wide text-[#5A6A94] w-[72px] text-right">Due</span>
+            <span className="flex-1 text-[11px] font-semibold uppercase tracking-wide text-[color:var(--text-3)]">Task</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wide text-[color:var(--text-3)]">Status</span>
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-wide text-[color:var(--text-3)] w-[72px] text-right">Due</span>
           </div>
 
           {isLoading && Array.from({ length: 8 }).map((_, i) => <TaskRowSkeleton key={i} />)}
@@ -182,12 +182,12 @@ export default function TasksPage() {
           {isError && (
             <div className="px-6 py-10 text-center">
               <p className="text-[var(--red)] text-[13px]">Failed to load tasks.</p>
-              <p className="text-[#5A6A94] text-[12px] mt-1">Check your Wrike connection and refresh.</p>
+              <p className="text-[color:var(--text-3)] text-[12px] mt-1">Check your Wrike connection and refresh.</p>
             </div>
           )}
 
           {!isLoading && !isError && filteredTasks.length === 0 && (
-            <div className="px-6 py-12 text-center text-[#5A6A94] text-[13px]">
+            <div className="px-6 py-12 text-center text-[color:var(--text-3)] text-[13px]">
               No tasks match this filter.
             </div>
           )}
@@ -198,7 +198,7 @@ export default function TasksPage() {
         </div>
 
         {!isLoading && filteredTasks.length > 0 && (
-          <p className="mt-3 text-right font-mono text-[11px] text-[#5A6A94]">
+          <p className="mt-3 text-right font-mono text-[11px] text-[color:var(--text-3)]">
             {filteredTasks.length} task{filteredTasks.length !== 1 ? "s" : ""}
           </p>
         )}

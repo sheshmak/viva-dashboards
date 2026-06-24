@@ -57,19 +57,19 @@ export function Topbar({ title, syncedAt }: TopbarProps) {
       <span className="font-display text-[16px] font-semibold flex-1">{title}</span>
 
       {syncedAt && (
-        <span className="text-[11px] text-[#5A6A94] flex items-center gap-1.5">
+        <span className="text-[11px] text-[color:var(--text-3)] flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#238636] flex-shrink-0" />
           Synced {relTime}
         </span>
       )}
 
-      <span className="font-mono text-[12px] text-[#8B9BC0]">{now}</span>
+      <span className="font-mono text-[12px] text-[color:var(--text-2)]">{now}</span>
 
       <button
         onClick={handleSync}
         disabled={syncing}
         title="Sync latest data from Wrike"
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[var(--border-2)] bg-transparent text-[#8B9BC0] text-[11px] font-medium hover:border-[#8B9BC0] hover:text-[#EEF0FF] transition-all disabled:opacity-50"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[var(--border-2)] bg-transparent text-[color:var(--text-2)] text-[11px] font-medium hover:border-[color:var(--text-2)] hover:text-[color:var(--text)] transition-all disabled:opacity-50"
         aria-label="Sync Wrike data"
       >
         <svg

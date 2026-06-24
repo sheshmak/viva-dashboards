@@ -53,6 +53,8 @@ export interface ScheduleProject {
   status: string;
   completedDate?: string;
   risk?: string;
+  progress?: number;          // 0..1 from backend (completed/total tasks)
+  responsibleIds?: string[];
   phases: SchedulePhase[];
   isOverdue: boolean;
 }

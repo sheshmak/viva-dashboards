@@ -2,6 +2,10 @@ import { prisma } from "@/lib/db";
 import { WrikeClient } from "@/lib/wrike";
 
 export async function getWrikeClient(): Promise<WrikeClient> {
+  // Static permanent access token — no OAuth / connection refresh needed.
+  const envToken = process.env.WRIKE_ACCESS_TOKEN;
+  if (envToken) return new WrikeClient(envToken);
+
   const conn = await prisma.appConnection.findUnique({ where: { id: "wrike" } });
   if (!conn) throw new Error("WRIKE_NOT_CONNECTED");
 

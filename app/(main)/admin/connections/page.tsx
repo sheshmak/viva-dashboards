@@ -85,34 +85,34 @@ export default function ConnectionsPage() {
       <style>{`
         .page { padding: 32px 36px; max-width: 900px; font-family: Inter, system-ui, sans-serif; }
         .page-header { margin-bottom: 28px; }
-        .page-title { font-size: 24px; font-weight: 700; color: #e2e8f0; margin: 0 0 4px; }
-        .page-subtitle { font-size: 13px; color: #64748b; margin: 0; }
+        .page-title { font-size: 24px; font-weight: 700; color: var(--text); margin: 0 0 4px; }
+        .page-subtitle { font-size: 13px; color: var(--text-2); margin: 0; }
         .connections-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
-        .connection-card { background: #1a1f2e; border: 1px solid #2a3044; border-radius: 12px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .connection-card { background: var(--ground-2); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
         .connection-card--soon { opacity: .55; }
         .connection-left { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
-        .connection-icon { width: 40px; height: 40px; border-radius: 10px; background: #4f6bed; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+        .connection-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
         .connection-icon--sf { background: #00a1e0; }
         .connection-info { min-width: 0; }
-        .connection-name { font-size: 15px; font-weight: 600; color: #e2e8f0; margin-bottom: 2px; }
-        .connection-desc { font-size: 13px; color: #64748b; }
-        .connection-meta { font-size: 11px; color: #4a5568; margin-top: 4px; }
+        .connection-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+        .connection-desc { font-size: 13px; color: var(--text-2); }
+        .connection-meta { font-size: 11px; color: var(--text-3); margin-top: 4px; }
         .connection-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .connection-status { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #4a5568; }
+        .connection-status { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); }
         .connection-status--ok { color: #3DD68C; }
         .connection-status--off { color: #ff6b6b; }
-        .coming-soon { font-size: 12px; font-weight: 600; color: #4a5568; background: #1e2538; border: 1px solid #2a3044; border-radius: 999px; padding: 4px 12px; }
-        .btn-primary { background: #4f6bed; color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .btn-primary:hover { background: #3d5ad4; }
-        .btn-ghost { background: none; border: 1px solid #2a3044; color: #94a3b8; border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; }
-        .btn-ghost:hover { border-color: #4a5568; color: #c8d3e8; }
-        .instructions { background: #1a1f2e; border: 1px solid #2a3044; border-radius: 12px; padding: 24px 28px; }
-        .instructions h3 { font-size: 15px; font-weight: 600; color: #c8d3e8; margin: 0 0 16px; }
+        .coming-soon { font-size: 12px; font-weight: 600; color: var(--text-3); background: var(--border); border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; }
+        .btn-primary { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-ghost { background: none; border: 1px solid var(--border); color: var(--text-2); border-radius: 8px; padding: 8px 14px; font-size: 13px; cursor: pointer; }
+        .btn-ghost:hover { border-color: var(--text-3); color: var(--text-soft); }
+        .instructions { background: var(--ground-2); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; }
+        .instructions h3 { font-size: 15px; font-weight: 600; color: var(--text-soft); margin: 0 0 16px; }
         .instructions ol { margin: 0 0 16px; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
-        li { font-size: 13.5px; color: #94a3b8; line-height: 1.5; }
-        .note { font-size: 12.5px; color: #64748b; background: #141824; border-radius: 8px; padding: 12px 16px; margin: 0; line-height: 1.6; }
-        code { background: #0f1117; border: 1px solid #2a3044; border-radius: 4px; padding: 1px 6px; font-size: 11.5px; color: #7CB9FF; }
-        a { color: #7CB9FF; text-decoration: none; }
+        li { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+        .note { font-size: 12.5px; color: var(--text-2); background: var(--ground-2); border-radius: 8px; padding: 12px 16px; margin: 0; line-height: 1.6; }
+        code { background: var(--ground); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 11.5px; color: var(--link); }
+        a { color: var(--link); text-decoration: none; }
         a:hover { text-decoration: underline; }
       `}</style>
     </div>

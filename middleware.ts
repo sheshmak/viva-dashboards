@@ -14,12 +14,15 @@ export default auth(function middleware(req) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Redirect authenticated users away from the landing/login pages
+  // Redirect authenticated users to the dashboards hub from the landing page
   if (pathname === "/" || pathname === "/login") {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/dashboard/list", req.url));
   }
 
-  return NextResponse.next();
+  // Expose the current path to server components (for per-dashboard access checks)
+  const headers = new Headers(req.headers);
+  headers.set("x-pathname", pathname);
+  return NextResponse.next({ request: { headers } });
 });
 
 export const config = {

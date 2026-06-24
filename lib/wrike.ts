@@ -63,12 +63,17 @@ export class WrikeClient {
     return res.data;
   }
 
-  /** Tasks in a specific folder/project */
+  /** Tasks in a specific folder/project.
+   *  Note: status/dates/parentIds/importance are DEFAULT fields and must NOT be
+   *  listed in `fields` (Wrike rejects default fields there). Only request
+   *  genuinely optional fields like responsibleIds. */
   async getFolderTasks(folderId: string): Promise<WrikeTask[]> {
     const res = await this.get<{ data: WrikeTask[] }>(
       `/folders/${folderId}/tasks`,
       {
-        fields: '["status","responsibles","dates","parentIds","importance"]',
+        descendants: "true",
+        pageSize: "1000",
+        fields: '["responsibleIds"]',
       }
     );
     return res.data;
@@ -229,7 +234,11 @@ export class WrikeClient {
     const allTasks: WrikeTask[] = [];
     let nextPageToken: string | undefined;
     do {
-      const params: Record<string, string> = { descendants: "true", pageSize: "1000" };
+      const params: Record<string, string> = {
+        descendants: "true",
+        pageSize: "1000",
+        fields: '["dependencyIds","responsibleIds","superParentIds"]',
+      };
       if (nextPageToken) params.nextPageToken = nextPageToken;
       const res = await this.get<{ data: WrikeTask[]; nextPageToken?: string }>(
         `/folders/${VIVA_SCHEDULE_FOLDER}/tasks`,
@@ -350,6 +359,32 @@ export class WrikeClient {
       }
     }
 
+    // ── Project→project dependency edges (from task-level Wrike dependencies) ─
+    const taskToProject = new Map<string, string>();
+    for (const [pid, tlist] of projectTaskMap) {
+      for (const t of tlist) taskToProject.set(t.id, pid);
+    }
+    const dependencies: DependencyEdge[] = [];
+    const depIds = new Set<string>();
+    for (const task of allTasks) for (const id of task.dependencyIds ?? []) depIds.add(id);
+    if (depIds.size > 0) {
+      try {
+        const deps = await this.getDependencies([...depIds].slice(0, 600));
+        const depSeen = new Set<string>();
+        for (const d of deps) {
+          const fromP = taskToProject.get(d.predecessorId);
+          const toP = taskToProject.get(d.successorId);
+          if (!fromP || !toP || fromP === toP) continue;
+          const key = `${fromP}->${toP}`;
+          if (depSeen.has(key)) continue;
+          depSeen.add(key);
+          dependencies.push({ from: fromP, to: toP });
+        }
+      } catch (e) {
+        console.error("[getGanttData] dependency resolution failed:", e instanceof Error ? e.message : e);
+      }
+    }
+
     for (const f of directProjects) {
       const num = extractProjectNumber(f.title);
       const tasks = projectTaskMap.get(f.id) ?? [];
@@ -388,7 +423,7 @@ export class WrikeClient {
       });
     }
 
-    return { projects, phaseMap };
+    return { projects, phaseMap, dependencies };
   }
 
   /** All tasks in the VIVA schedule folder (paginated, with custom fields) */
@@ -421,6 +456,19 @@ export class WrikeClient {
     } while (nextPageToken && all.length < limit);
 
     return { tasks: all.slice(0, limit), truncated: all.length >= limit };
+  }
+
+  /** Resolve Wrike dependency objects (predecessor/successor task IDs) in batches. */
+  async getDependencies(ids: string[]): Promise<Array<{ id: string; predecessorId: string; successorId: string; relationType?: string }>> {
+    const out: Array<{ id: string; predecessorId: string; successorId: string; relationType?: string }> = [];
+    for (let i = 0; i < ids.length; i += 100) {
+      const batch = ids.slice(i, i + 100);
+      const res = await this.get<{ data: Array<{ id: string; predecessorId: string; successorId: string; relationType?: string }> }>(
+        `/dependencies/${batch.join(",")}`
+      );
+      out.push(...res.data);
+    }
+    return out;
   }
 
   /** Custom field definitions for the account */
@@ -456,6 +504,12 @@ export interface ScheduleProject {
   status: string;     // "Green" | "Yellow" | "Red" | "Completed" | "OnHold" | "Cancelled" | "Custom"
   completedDate?: string;
   risk?: string;      // "1. On Track" | "2. Potential Risk" | "3. At Risk" | "4. ELT Risk"
+  progress?: number;  // 0..1, completed tasks / total tasks
+}
+
+export interface DependencyEdge {
+  from: string;       // predecessor project id
+  to: string;         // successor project id
 }
 
 export interface DepartmentPhase {
@@ -468,6 +522,7 @@ export interface DepartmentPhase {
 export interface GanttData {
   projects: ScheduleProject[];
   phaseMap: Record<string, DepartmentPhase[]>;
+  dependencies?: DependencyEdge[];
 }
 
 // Keyword→department mapping (task titles are checked case-insensitively)

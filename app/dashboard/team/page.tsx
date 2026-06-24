@@ -34,7 +34,7 @@ function MemberCard({ member, maxActive }: { member: MemberStats; maxActive: num
         <Avatar name={member.name} imageUrl={member.avatarUrl} size={40} />
         <div className="min-w-0">
           <p className="font-display text-[14px] font-semibold truncate">{member.name}</p>
-          <p className="text-[11px] text-[#5A6A94] truncate">{member.email}</p>
+          <p className="text-[11px] text-[color:var(--text-3)] truncate">{member.email}</p>
         </div>
         <span className="ml-auto chip-muted">{member.role}</span>
       </div>
@@ -50,14 +50,14 @@ function MemberCard({ member, maxActive }: { member: MemberStats; maxActive: num
             <p className="font-display font-bold text-[22px] leading-none mb-0.5" style={{ color }}>
               {value}
             </p>
-            <p className="text-[10px] uppercase tracking-wide text-[#5A6A94]">{label}</p>
+            <p className="text-[10px] uppercase tracking-wide text-[color:var(--text-3)]">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Load bar */}
       <div>
-        <div className="flex justify-between text-[10px] text-[#5A6A94] mb-1.5">
+        <div className="flex justify-between text-[10px] text-[color:var(--text-3)] mb-1.5">
           <span>Workload</span>
           {member.active > 0 && overduePct > 0 && (
             <span className="text-[var(--red)]">{Math.round(overduePct)}% overdue</span>
@@ -136,7 +136,7 @@ export default function TeamPage() {
             placeholder="Search team members…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-3.5 py-2 bg-ground-2 border border-[var(--border)] rounded-xl text-[13px] text-[#EEF0FF] placeholder:text-[#5A6A94] outline-none focus:border-[var(--border-2)] transition-colors"
+            className="w-full px-3.5 py-2 bg-ground-2 border border-[var(--border)] rounded-xl text-[13px] text-[color:var(--text)] placeholder:text-[color:var(--text-3)] outline-none focus:border-[var(--border-2)] transition-colors"
           />
         </div>
 
@@ -161,7 +161,7 @@ export default function TeamPage() {
         )}
 
         {!isLoading && memberStats.length === 0 && (
-          <div className="text-center py-16 text-[#5A6A94] text-[13px]">
+          <div className="text-center py-16 text-[color:var(--text-3)] text-[13px]">
             {search ? `No team members match "${search}".` : "No team members found."}
           </div>
         )}
@@ -173,7 +173,7 @@ export default function TeamPage() {
                 <MemberCard key={member.id} member={member} maxActive={maxActive} />
               ))}
             </div>
-            <p className="mt-4 text-right font-mono text-[11px] text-[#5A6A94]">
+            <p className="mt-4 text-right font-mono text-[11px] text-[color:var(--text-3)]">
               {memberStats.length} member{memberStats.length !== 1 ? "s" : ""}
             </p>
           </>
