@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ground:       #1E2338;
+  --ground-2:     #252B44;
+  --ground-3:     #2E3554;
+  --text:         #EEF0FF;
+  --text-2:       #8B9BC0;
+  --text-3:       #5A6A94;
+  --accent:       #FFB020;
+  --accent-dim:   #3D2D00;
+  --green:        #3DD68C;
+  --green-dim:    #0D3322;
+  --red:          #FF6B6B;
+  --red-dim:      #3D1010;
+  --blue:         #7CB9FF;
+  --blue-dim:     #0D2040;
+  --border:       rgba(139,155,192,0.12);
+  --border-2:     rgba(139,155,192,0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: var(--ground);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ground-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@layer utilities {
+  .text-display { font-family: 'Space Grotesk', sans-serif; }
+  .text-mono    { font-family: 'JetBrains Mono', monospace; }
+
+  .bg-ground   { background-color: var(--ground); }
+  .bg-ground-2 { background-color: var(--ground-2); }
+  .bg-ground-3 { background-color: var(--ground-3); }
+
+  .border-wv   { border-color: var(--border); }
+  .border-wv-2 { border-color: var(--border-2); }
+
+  .text-wv-muted { color: var(--text-2); }
+  .text-wv-faint { color: var(--text-3); }
+  .text-wv-accent { color: var(--accent); }
+  .text-wv-green  { color: var(--green); }
+  .text-wv-red    { color: var(--red); }
+  .text-wv-blue   { color: var(--blue); }
+
+  /* Chip variants */
+  .chip-base {
+    @apply inline-flex items-center text-[10px] font-semibold tracking-wide uppercase px-[7px] py-0.5 rounded;
+  }
+  .chip-red   { @apply chip-base; background: var(--red-dim); color: var(--red); }
+  .chip-amber { @apply chip-base; background: var(--accent-dim); color: var(--accent); }
+  .chip-green { @apply chip-base; background: var(--green-dim); color: var(--green); }
+  .chip-blue  { @apply chip-base; background: var(--blue-dim); color: var(--blue); }
+  .chip-muted { @apply chip-base; background: var(--ground-3); color: var(--text-2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

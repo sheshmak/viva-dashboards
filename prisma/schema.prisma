@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("VIEWER") // ADMIN | VIEWER
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  accesses  UserAccess[]
+}
+
+model DashboardFolder {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  app         String      @default("wrike")
+  icon        String?
+  order       Int         @default(0)
+  isPublic    Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  dashboards  Dashboard[]
+  accesses    UserAccess[]
+}
+
+model Dashboard {
+  id          String           @id @default(cuid())
+  name        String
+  description String?
+  type        String
+  config      String?
+  folderId    String?
+  folder      DashboardFolder? @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  order       Int              @default(0)
+  isPublic    Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  accesses    UserAccess[]
+}
+
+model UserAccess {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  folderId    String?
+  folder      DashboardFolder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  dashboardId String?
+  dashboard   Dashboard?       @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+}
+
+model AppConnection {
+  id           String   @id
+  app          String   @unique
+  accessToken  String
+  refreshToken String
+  expiresAt    BigInt
+  host         String   @default("www.wrike.com")
+  updatedAt    DateTime @updatedAt
+}
