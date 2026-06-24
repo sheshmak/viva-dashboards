@@ -26,16 +26,16 @@ function SpaceCard({
         </div>
         <div className="min-w-0">
           <h3 className="font-display text-[14px] font-semibold truncate">{space.title}</h3>
-          <p className="text-[11px] text-[#5A6A94] capitalize">{space.accessType.toLowerCase()} space</p>
+          <p className="text-[11px] text-[color:var(--text-3)] capitalize">{space.accessType.toLowerCase()} space</p>
         </div>
       </div>
 
       {space.description && (
-        <p className="text-[12px] text-[#8B9BC0] line-clamp-2 mb-4">{space.description}</p>
+        <p className="text-[12px] text-[color:var(--text-2)] line-clamp-2 mb-4">{space.description}</p>
       )}
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1.5 text-[12px] text-[#8B9BC0]">
+        <div className="flex items-center gap-1.5 text-[12px] text-[color:var(--text-2)]">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
             <circle cx="9" cy="7" r="4" />
@@ -73,21 +73,21 @@ export default function SpacesPage() {
           <div className="flex items-center gap-6 mb-6 px-5 py-3.5 bg-ground-2 border border-[var(--border)] rounded-xl">
             <div className="text-center">
               <p className="font-display font-bold text-[24px] text-[var(--accent)]">{spaces.length}</p>
-              <p className="text-[10px] uppercase tracking-wide text-[#5A6A94]">Spaces</p>
+              <p className="text-[10px] uppercase tracking-wide text-[color:var(--text-3)]">Spaces</p>
             </div>
             <div className="w-px h-8 bg-[var(--border)]" />
             <div className="text-center">
               <p className="font-display font-bold text-[24px] text-[var(--blue)]">
                 {spaces.filter((s) => s.accessType === "Public").length}
               </p>
-              <p className="text-[10px] uppercase tracking-wide text-[#5A6A94]">Public</p>
+              <p className="text-[10px] uppercase tracking-wide text-[color:var(--text-3)]">Public</p>
             </div>
             <div className="w-px h-8 bg-[var(--border)]" />
             <div className="text-center">
               <p className="font-display font-bold text-[24px] text-[var(--green)]">
                 {contacts?.filter((c) => !c.deleted && c.type === "Person").length ?? 0}
               </p>
-              <p className="text-[10px] uppercase tracking-wide text-[#5A6A94]">Team members</p>
+              <p className="text-[10px] uppercase tracking-wide text-[color:var(--text-3)]">Team members</p>
             </div>
           </div>
         )}
@@ -113,12 +113,12 @@ export default function SpacesPage() {
         {isError && (
           <div className="text-center py-16">
             <p className="text-[var(--red)] text-[13px]">Failed to load spaces.</p>
-            <p className="text-[#5A6A94] text-[12px] mt-1">Check your Wrike connection and refresh.</p>
+            <p className="text-[color:var(--text-3)] text-[12px] mt-1">Check your Wrike connection and refresh.</p>
           </div>
         )}
 
         {!isLoading && !isError && spaces?.length === 0 && (
-          <div className="text-center py-16 text-[#5A6A94] text-[13px]">
+          <div className="text-center py-16 text-[color:var(--text-3)] text-[13px]">
             No spaces visible with your access level.
           </div>
         )}

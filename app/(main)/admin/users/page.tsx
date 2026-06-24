@@ -101,40 +101,40 @@ export default function UsersPage() {
       <style>{`
         .page { padding: 32px 36px; max-width: 1100px; font-family: Inter, system-ui, sans-serif; }
         .page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; }
-        .page-title { font-size: 24px; font-weight: 700; color: #e2e8f0; margin: 0 0 4px; }
-        .page-subtitle { font-size: 13px; color: #64748b; margin: 0; }
-        .btn-primary { background: #4f6bed; color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .btn-primary:hover:not(:disabled) { background: #3d5ad4; }
+        .page-title { font-size: 24px; font-weight: 700; color: var(--text); margin: 0 0 4px; }
+        .page-subtitle { font-size: 13px; color: var(--text-2); margin: 0; }
+        .btn-primary { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
         .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
-        .btn-ghost { background: none; border: 1px solid #2a3044; color: #94a3b8; border-radius: 8px; padding: 9px 16px; font-size: 14px; cursor: pointer; }
-        .btn-ghost:hover { border-color: #4a5568; color: #c8d3e8; }
-        .btn-ghost-sm { background: none; border: 1px solid #2a3044; color: #6b7a99; border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; }
-        .btn-ghost-sm:hover { border-color: #4a5568; color: #c8d3e8; }
+        .btn-ghost { background: none; border: 1px solid var(--border); color: var(--text-2); border-radius: 8px; padding: 9px 16px; font-size: 14px; cursor: pointer; }
+        .btn-ghost:hover { border-color: var(--text-3); color: var(--text-soft); }
+        .btn-ghost-sm { background: none; border: 1px solid var(--border); color: var(--text-3); border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; }
+        .btn-ghost-sm:hover { border-color: var(--text-3); color: var(--text-soft); }
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 100; display: flex; align-items: center; justify-content: center; }
-        .modal { background: #1a1f2e; border: 1px solid #2a3044; border-radius: 14px; padding: 28px 32px; width: 420px; }
-        .modal h2 { font-size: 18px; font-weight: 700; color: #e2e8f0; margin: 0 0 20px; }
+        .modal { background: var(--ground-2); border: 1px solid var(--border); border-radius: 14px; padding: 28px 32px; width: 420px; }
+        .modal h2 { font-size: 18px; font-weight: 700; color: var(--text); margin: 0 0 20px; }
         .form-error { background: rgba(255,107,107,.1); border: 1px solid rgba(255,107,107,.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #ff6b6b; margin-bottom: 16px; }
         .form-fields { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
         .field { display: flex; flex-direction: column; gap: 5px; }
-        label { font-size: 12px; color: #94a3b8; font-weight: 500; }
-        input, select { background: #0f1117; border: 1px solid #2a3044; border-radius: 8px; padding: 9px 12px; font-size: 14px; color: #e2e8f0; outline: none; }
-        input:focus, select:focus { border-color: #4f6bed; }
+        label { font-size: 12px; color: var(--text-2); font-weight: 500; }
+        input, select { background: var(--ground); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-size: 14px; color: var(--text); outline: none; }
+        input:focus, select:focus { border-color: var(--primary); }
         select { cursor: pointer; }
         .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
-        .user-table { background: #1a1f2e; border: 1px solid #2a3044; border-radius: 12px; overflow: hidden; }
-        .table-header { display: grid; grid-template-columns: 1.4fr 1.8fr 0.8fr 0.8fr 1fr 0.8fr; gap: 0; padding: 12px 20px; background: #141824; border-bottom: 1px solid #2a3044; font-size: 11px; font-weight: 700; color: #4a5568; text-transform: uppercase; letter-spacing: 0.07em; }
-        .table-row { display: grid; grid-template-columns: 1.4fr 1.8fr 0.8fr 0.8fr 1fr 0.8fr; align-items: center; padding: 14px 20px; border-bottom: 1px solid #1e2538; font-size: 13.5px; }
+        .user-table { background: var(--ground-2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .table-header { display: grid; grid-template-columns: 1.4fr 1.8fr 0.8fr 0.8fr 1fr 0.8fr; gap: 0; padding: 12px 20px; background: var(--ground-2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; }
+        .table-row { display: grid; grid-template-columns: 1.4fr 1.8fr 0.8fr 0.8fr 1fr 0.8fr; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
         .table-row:last-child { border-bottom: none; }
-        .table-row:hover { background: #1e2538; }
-        .user-name { font-weight: 600; color: #e2e8f0; }
-        .user-email { color: #64748b; }
-        .user-date { color: #4a5568; font-size: 12px; }
-        .role-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7a99; }
-        .role-badge--admin { color: #FFB020; }
+        .table-row:hover { background: var(--border); }
+        .user-name { font-weight: 600; color: var(--text); }
+        .user-email { color: var(--text-2); }
+        .user-date { color: var(--text-3); font-size: 12px; }
+        .role-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-3); }
+        .role-badge--admin { color: var(--accent); }
         .status-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
         .status-pill--active { background: rgba(61,214,140,.12); color: #3DD68C; }
-        .status-pill--inactive { background: rgba(90,99,118,.15); color: #8892a4; }
-        .loading { padding: 40px; text-align: center; color: #4a5568; font-size: 14px; }
+        .status-pill--inactive { background: rgba(90,99,118,.15); color: var(--text-2); }
+        .loading { padding: 40px; text-align: center; color: var(--text-3); font-size: 14px; }
       `}</style>
     </div>
   );

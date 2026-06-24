@@ -40,6 +40,7 @@ export function useGanttData() {
   return useQuery<{
     projects: ScheduleProject[];
     phaseMap: Record<string, DepartmentPhase[]>;
+    dependencies: { from: string; to: string }[];
     syncedAt?: string;
   }>({
     queryKey: ["schedule", "gantt-data"],
@@ -57,6 +58,7 @@ export function useGanttData() {
             p.status !== "Cancelled",
         })),
         phaseMap: data.phaseMap,
+        dependencies: data.dependencies ?? [],
         syncedAt: data.syncedAt,
       };
     },

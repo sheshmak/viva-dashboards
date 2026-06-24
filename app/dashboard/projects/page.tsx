@@ -42,7 +42,7 @@ function ProjectCard({ project }: { project: WrikeFolder }) {
             {project.title}
           </h3>
           {project.briefDescription && (
-            <p className="text-[12px] text-[#8B9BC0] line-clamp-2">
+            <p className="text-[12px] text-[color:var(--text-2)] line-clamp-2">
               {project.briefDescription}
             </p>
           )}
@@ -58,7 +58,7 @@ function ProjectCard({ project }: { project: WrikeFolder }) {
           )}
         </div>
         {(startDate || endDate) && (
-          <span className="font-mono text-[10px] text-[#5A6A94]">
+          <span className="font-mono text-[10px] text-[color:var(--text-3)]">
             {startDate && endDate ? `${startDate} – ${endDate}` : endDate ?? startDate}
           </span>
         )}
@@ -115,8 +115,8 @@ export default function ProjectsPage() {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-[12px] font-medium transition-all",
                   filter === value
-                    ? "bg-ground-3 text-[#EEF0FF] border border-[var(--border-2)]"
-                    : "text-[#8B9BC0] hover:text-[#EEF0FF] border border-transparent"
+                    ? "bg-ground-3 text-[color:var(--text)] border border-[var(--border-2)]"
+                    : "text-[color:var(--text-2)] hover:text-[color:var(--text)] border border-transparent"
                 )}
               >
                 {label}
@@ -135,7 +135,7 @@ export default function ProjectsPage() {
               placeholder="Search projects…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-3.5 py-2 bg-ground-2 border border-[var(--border)] rounded-xl text-[13px] text-[#EEF0FF] placeholder:text-[#5A6A94] outline-none focus:border-[var(--border-2)] transition-colors"
+              className="w-full px-3.5 py-2 bg-ground-2 border border-[var(--border)] rounded-xl text-[13px] text-[color:var(--text)] placeholder:text-[color:var(--text-3)] outline-none focus:border-[var(--border-2)] transition-colors"
             />
           </div>
         </div>
@@ -149,12 +149,12 @@ export default function ProjectsPage() {
         {isError && (
           <div className="text-center py-16">
             <p className="text-[var(--red)] text-[13px]">Failed to load projects.</p>
-            <p className="text-[#5A6A94] text-[12px] mt-1">Check your Wrike connection and refresh.</p>
+            <p className="text-[color:var(--text-3)] text-[12px] mt-1">Check your Wrike connection and refresh.</p>
           </div>
         )}
 
         {!isLoading && !isError && filtered.length === 0 && (
-          <div className="text-center py-16 text-[#5A6A94] text-[13px]">
+          <div className="text-center py-16 text-[color:var(--text-3)] text-[13px]">
             {search ? `No projects match "${search}".` : "No projects visible with your access."}
           </div>
         )}
@@ -166,7 +166,7 @@ export default function ProjectsPage() {
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
-            <p className="mt-4 text-right font-mono text-[11px] text-[#5A6A94]">
+            <p className="mt-4 text-right font-mono text-[11px] text-[color:var(--text-3)]">
               {filtered.length} project{filtered.length !== 1 ? "s" : ""}
             </p>
           </>
